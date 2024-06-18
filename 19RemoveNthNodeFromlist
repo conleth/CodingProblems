@@ -1,0 +1,152 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+// var removeNthFromEnd = function(head, n) {
+//     let newHead = head
+//     let result = newHead ;
+//     let i = 0 ;
+//     while(newHead != null){
+
+//         if(i == n){
+//              while(newHead != null){
+//                 if(newHead.next != null){
+//                     newHead = newHead.next
+//                     break;
+//                 }
+//              }
+//         }
+//         else{
+//             i++ ;
+//             newHead = newHead.next
+//         }
+//     }
+//     return result;
+// };
+
+
+
+// var removeNthFromEnd = function(head, n) {
+//     let newHead = head
+//     let result = newHead ;
+//     let i = 0 ;
+//     while(newHead != null){
+//         if(newHead.next == null){
+//             newHead = null
+//             break;
+//         }
+//         if(i >= n){
+//             newHead = newHead.next
+//         }
+//         else{
+//             i++ ;
+//             newHead = newHead.next
+//         }
+//     }
+//     return result
+// };
+
+
+// var removeNthFromEnd = function(head, n) {
+//     let newHead = new ListNode() ;
+//     let result = newHead ;
+//     let temp = head ;
+//     let i = 0 ;
+//     while(temp != null){
+//         temp = temp.next
+//         i++ ;
+//     }
+//     console.log(i)
+//     console.log(n)
+//     console.log(i-n)
+
+//     for(let j=0; j< i; j++){
+//         if(j != i - n ){
+//             newHead.next = head
+//             if(i-n != 1){
+//                 newHead = newHead.next
+//             }
+//         }
+//         head = head.next; 
+//     }
+//     return result.next
+// };
+
+
+// var removeNthFromEnd = function(head, n) {
+//     let newHead = new ListNode();
+//     let result = newHead;
+//     newHead.next = head; // Connect the dummy node to the head of the list
+//     let temp = head;
+//     let length = 0;
+
+//     // Calculate the length of the list
+//     while (temp != null) {
+//         temp = temp.next;
+//         length++;
+//     }
+
+//     let targetIndex = length - n; // The position of the node to remove
+//     temp = newHead; // Reset temp to newHead to start traversing again
+
+//     // Traverse the list to find the node just before the target node
+//     for (let i = 0; i < targetIndex; i++) {
+//         temp = temp.next;
+//     }
+
+//     // Remove the target node
+//     temp.next = temp.next.next;
+
+//     return result.next;
+// };
+
+
+var removeNthFromEnd = function(head, n) {
+    let mList = new ListNode(0, head);
+    let fast = mList;
+    let slow = mList;
+
+    // Move fast ahead by n+1 steps to reach the node after the one to be removed
+    for (let i = 0; i <= n; i++) {
+        fast = fast.next;
+    }
+
+    // Move both pointers until fast reaches the end of the list
+    while (fast !== null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+    //remove the reference of the terget node by esentially skipping it
+    slow.next = slow.next.next;
+
+    // Return the head of the modified list
+    return mList.next;
+};
+
+// var removeNthFromEnd = function(head, n) {
+//     let dummy = new ListNode(0,head);
+//     let slow = dummy
+//     let fast = dummy
+
+//     for(i=0; i<=n; i++){
+//         fast = fast.next
+//     }
+
+//     while(fast != null){
+//         fast = fast.next
+//         slow = slow.next
+//     }
+
+//     slow.next = slow.next.next
+//     return dummy.next
+
+// };
