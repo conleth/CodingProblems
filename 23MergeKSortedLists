@@ -1,0 +1,78 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+//  var mergeTwoLists = function (list1, list2) {
+//     if (!list1) {
+//         return list2;
+//     }
+//     if (!list2) {
+//         return list1;
+//     }
+//     if (list1.val < list2.val) {
+//         list1.next = mergeTwoLists(list1.next, list2)
+//         return list1;
+//     }
+//     else {
+//         list2.next = mergeTwoLists(list1, list2.next);
+//         return list2;
+//     }
+// }
+
+// var mergeKLists = function(lists) {
+//     if(lists === null|| lists.length == 0)
+//         return null
+    
+//     let mList =  ListNode(); 
+//     for(let i=0; i < lists.length; i++){
+//         mList = mergeTwoLists(mList, lists[i])
+//     }
+//     return mList
+// };
+
+
+var mergeKLists = function(lists) {
+    // Initialize a min-priority queue with a custom priority function.
+    // The priority function specifies that the priority of each node (x) in the queue
+    // is determined by its 'val' property, ensuring the queue is ordered by node values.
+    const queue = new MinPriorityQueue({ priority: x => x.val });
+
+    // Load the head of each of the lists into the min-queue,
+    // which will naturally sort each starting value.
+    for (let list of lists) {
+        if (list) {
+            queue.enqueue(list);
+        }
+    }
+
+    // Create a new merged list storage with a dummy node.
+    let mList = new ListNode();
+    // Set the new head for returning later.
+    let newHead = mList;
+
+    // While the queue still has values.
+    while (!queue.isEmpty()) {
+        // Dequeue the smallest node from the queue.
+        const { val, next } = queue.dequeue().element;
+
+        // Add the dequeued node's value to the merged list.
+        mList.next = new ListNode(val);
+        // Move the pointer to the end of the merged list.
+        mList = mList.next;
+
+        // If the dequeued node has a next node, enqueue it into the queue.
+        if (next) {
+            queue.enqueue(next);
+        }
+    }
+
+    // Return the next node of the dummy node, which is the head of the merged list.
+    return newHead.next;
+};
